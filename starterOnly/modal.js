@@ -21,3 +21,14 @@ function launchModal() {
 }
 
 
+// --- Issue 1: close the modal
+//variable btnclose : croix de la modale
+const btnclose = document.querySelector(".close");
+btnclose.addEventListener('click', () => {
+  // console.log("click");
+  //au click sur la croix, la modale passe en display:none pour disparaitre
+  modalbg.style.display="none";
+})
+
+
+
