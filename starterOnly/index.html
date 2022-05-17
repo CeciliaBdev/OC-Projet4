@@ -60,7 +60,6 @@
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return validate();"
             >
             <!-- onsubmit="return validate();" -->
               <div
@@ -71,7 +70,6 @@
                   type="text"
                   id="first"
                   name="first"
-                  pattern="^[A-zÀ-ú-]{2,}$"
                 /><br>
               </div>
               <div
@@ -82,8 +80,7 @@
                   type="text"
                   id="last"
                   name="last"
-                  pattern="^[A-zÀ-ú-]{2,}$"
-                /><br>
+                /><br>    
               </div>
               <div
                 class="formData">
@@ -180,7 +177,6 @@
                   Portland</label
                 >
               </div>
-
               <div
                 class="formData">
                 <input
@@ -209,8 +205,8 @@
                 type="submit"
                 class="button"
                 value="C'est parti"
+                class="btn-submit" 
               />
-              <!-- class="btn-submit" -->
             </form>
           </div>
         </div>

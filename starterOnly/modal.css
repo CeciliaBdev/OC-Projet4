@@ -203,7 +203,6 @@ input {
 input:focus{
   border: 3px solid #3876ac;
 }
-/* a approfondir */
 
 .text-control {
   margin: 0;
@@ -215,7 +214,7 @@ input:focus{
 }
 .formData[data-error]::after {
   content: attr(data-error);
-  font-size: 0.4em;
+  font-size: 0.6em;
   color: #e54858;
   display: block;
   margin-top: 7px;
@@ -231,6 +230,7 @@ input:focus{
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
+
 /* 
 input[data-error]::after {
     content: attr(data-error);
@@ -531,4 +531,9 @@ footer {
     opacity: 1;
   }
 }
-
+/* message d'erreur */
+#firstError, #lastError {
+  font-size: 16px;
+  display:none;
+  color:red;
+}

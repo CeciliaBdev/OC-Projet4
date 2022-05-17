@@ -10,14 +10,12 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-//données formulaires
-const formData = document.querySelectorAll(".formData");
 //le formulaire
 const formulaire = document.querySelector("form");
 //bouton close modal
 const btnclose = document.querySelector(".close");
-//id:first : input prenom
-const firstname = document.getElementById('first');
+//tous les champs du formulaire
+const formData = document.querySelectorAll(".formData")
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -36,44 +34,115 @@ btnclose.addEventListener('click', () => {
   modalbg.style.display="none";
 })
 
-// --- Issue 2: Implémenter entrée du formulaire
-//2.1 : html label / attribute for
+//conservation des données en cliquant sur le bouton submit
+//annule le changement de page
+formulaire.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let firstName = document.getElementById("first")
+  let lastName = document.getElementById("last")
+  let email = document.getElementById("email")
+  let birthDate = document.getElementById("birthdate")
+  let tournamentNumber = document.getElementById("quantity")
+  let buttons = document.getElementsByName("location")
+  let cgvChecked = document.getElementById("checkbox1")
+  firstNameValidate(firstName);
+  lastNameValidate(lastName);
+  emailValidate(email);
+  birthDateValidate(birthDate)
+  numberTournamentValidate(tournamentNumber);
+  chooseLocation(buttons) ;
+  cgvValidate(cgvChecked);
 
-//2.2 : Le formulaire doit être valide quand l'utilisateur clique sur "Submit"
+})
 
-function validate() {
-  let isValid = true //variable formulaire valide
-  let isChecked = false //variable checkbox cochée
-
-  //pour chaque element
-  formData.forEach((el) => {
-
-    //ici mes elements: les input
-    el.querySelectorAll('input').forEach((inputEl) => {
-
-      //si mon input est vide
-      if(inputEl.value === "") {
-        isValid = false
-      }
-      //il faut au moins 1 tournoi sélectionné
-      if(inputEl.getElementsByClassName("checkbox-input") && inputEl.getAttribute("name") === "location" && inputEl.checked === true) {
-        isChecked = true
-      }
-    });
-
-  });
-
-  if(isValid === false) {
-    alert("Formulaire incomplet")
-  } else if(isChecked === false){
-    alert("Choisissez un tournoi")
-  } else {
-    alert("Formulaire valide - Envoyé")
+//Issue 3
+//Mes fonctions de validation des input
+function firstNameValidate (field){
+  const regex = /^[A-zÀ-ú-]{2,}$/
+  if (regex.test(field.value)===false){
+    formData[0].setAttribute('data-error', 'Le champ "Prénom" est incorrect');
+    formData[0].setAttribute('data-error-visible', 'true');
+    return false
+  }else{
+    formData[0].removeAttribute('data-error');
+    formData[0].removeAttribute('data-error-visible');
+    return true;
   }
-
+}
+function lastNameValidate (field){
+  const regex = /^[A-zÀ-ú-]{2,}$/
+  if (regex.test(field.value)===false){
+    formData[1].setAttribute('data-error', 'Le champ "Nom" est incorrect');
+    formData[1].setAttribute('data-error-visible', 'true');
+    return false
+  }else{
+    formData[1].removeAttribute('data-error');
+    formData[1].removeAttribute('data-error-visible');
+    return true;
+  }
+}
+function emailValidate (field){
+  const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/
+  if (regex.test(field.value)===false){
+    formData[2].setAttribute('data-error', 'Le champ "Email" est incorrect');
+    formData[2].setAttribute('data-error-visible', 'true');
+    return false
+  }else{
+    formData[2].removeAttribute('data-error');
+    formData[2].removeAttribute('data-error-visible');
+    return true;
+  }
+}
+function birthDateValidate (field){
+  if (field.value === ""){
+    formData[3].setAttribute('data-error', 'Entrez votre date de naissance');
+    formData[3].setAttribute('data-error-visible', 'true');
+    return false
+  }else{
+    formData[3].removeAttribute('data-error');
+    formData[3].removeAttribute('data-error-visible');
+    return true;
+  }
+}
+function numberTournamentValidate (field){
+  if (field.value === ""){
+    formData[4].setAttribute('data-error', 'Entrez un nombre de tournoi');
+    formData[4].setAttribute('data-error-visible', 'true');
+    return false
+  }else{
+    formData[4].removeAttribute('data-error');
+    formData[4].removeAttribute('data-error-visible');
+    return true;
+  }
+}
+function chooseLocation(buttons) {
+  for (let i = 0; i < buttons.length; i++) {
+    //si un bouton est coché
+    if (buttons[i].checked) {
+      formData[5].setAttribute("data-error-visible", "false");
+      return true;
+    }
+  }
+  formData[5].setAttribute("data-error-visible", "true");
+  formData[5].setAttribute("data-error", "Choisissez un tournoi");
+  return false;
+}
+function cgvValidate (field){
+  if (field.checked){
+    console.log("coché")
+    formData[6].removeAttribute('data-error');
+    formData[6].removeAttribute('data-error-visible');
+    return false
+  }else{
+    console.log("non coché")
+    formData[6].setAttribute('data-error', 'Vous devez lire et acceptez les termes et conditions.');
+    formData[6].setAttribute('data-error-visible', 'true');
+    return true;
+  }
 }
 
-//2.2.1: champ prénom : min 2 caractères/pas vide
+
+////2.2.1: champ prénom : min 2 caractères/pas vide
 //validation selon une expression régulière
 //utilisation de la regex: 
 // regex: ^[A-zÀ-ú-]{2,}$
@@ -85,6 +154,9 @@ function validate() {
 
 //2.2.3: adresse email valide
 //attribut type:email 
+// regex email: ^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$
+// caractère alphanumerique (sans accent) avant et après le "@" et le point
+//min 2 charcatères
 
 //2.2.4: nb de tournoi type number
 // entre 0 et 99 avec min=0 et max=99
@@ -94,13 +166,3 @@ function validate() {
 
 //2.2.6 : les cgv sont cochés
 // dans l'input checkbox: l'attribut "checked" est rajouté pour le 1er + attribut "required" pour valider le formuliare, pour le 2e ni requis ni coché d'avance
-
-
-//conservation des données en cliquant sur le bouton submit
-//annule le changement de page
-formulaire.addEventListener("submit", (e) => {
-  e.preventDefault();
-})
-
-
-
