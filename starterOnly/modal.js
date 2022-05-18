@@ -53,12 +53,44 @@ formulaire.addEventListener("submit", (e) => {
   chooseLocation(buttons) ;
   cgvValidate(cgvChecked);
 
+  let error = 0
+
+  if (!firstNameValidate(firstName)){
+    error++;
+  }
+  if (!lastNameValidate(lastName)){
+    error++;
+  }
+  if (!emailValidate(email)){
+    error++;
+  }
+  if (!birthDateValidate(birthDate)){
+    error++;
+  }
+  if (!numberTournamentValidate(tournamentNumber)){
+    error++;
+  }
+  if (!chooseLocation(buttons)){
+    error++;
+  }
+  if (!cgvValidate(cgvChecked)){
+    error++;
+  }  
+  console.log(error)
+
+  if (error === 0){
+    alert("  -----------------\nFormulaire complet\n  -----------------\n\nMerci de votre participation")
+  }else{
+    alert("  ------------------\nFormulaire incomplet\n  ------------------")
+  }
+  
 })
 
 //Issue 3
 //Mes fonctions de validation des input
 function firstNameValidate (field){
   const regex = /^[A-zÀ-ú-]{2,}$/
+  
   if (regex.test(field.value)===false){
     formData[0].setAttribute('data-error', 'Le champ "Prénom" est incorrect');
     formData[0].setAttribute('data-error-visible', 'true');
@@ -68,6 +100,7 @@ function firstNameValidate (field){
     formData[0].removeAttribute('data-error-visible');
     return true;
   }
+  
 }
 function lastNameValidate (field){
   const regex = /^[A-zÀ-ú-]{2,}$/
@@ -120,7 +153,7 @@ function chooseLocation(buttons) {
     //si un bouton est coché
     if (buttons[i].checked) {
       formData[5].setAttribute("data-error-visible", "false");
-      return true;
+      return true;     
     }
   }
   formData[5].setAttribute("data-error-visible", "true");
@@ -129,15 +162,15 @@ function chooseLocation(buttons) {
 }
 function cgvValidate (field){
   if (field.checked){
-    console.log("coché")
+    //console.log("coché")
     formData[6].removeAttribute('data-error');
     formData[6].removeAttribute('data-error-visible');
-    return false
+    return true
   }else{
-    console.log("non coché")
+    //console.log("non coché")
     formData[6].setAttribute('data-error', 'Vous devez lire et acceptez les termes et conditions.');
     formData[6].setAttribute('data-error-visible', 'true');
-    return true;
+    return false;
   }
 }
 
