@@ -16,6 +16,11 @@ const formulaire = document.querySelector("form");
 const btnclose = document.querySelector(".close");
 //tous les champs du formulaire
 const formData = document.querySelectorAll(".formData")
+const modal = document.querySelector(".modal-body")
+
+const button = document.querySelector(".button")
+const message = document.getElementById("confirm")
+message.style.display = "none"
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -24,15 +29,20 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   modalbg.style.display = "block";
 }
+//reset le formulaire à la fermeture de la modale
+function resetModal(){
+  formulaire.reset()
+}
 
 
 // --- Issue 1: close the modal
 //variable btnclose : croix de la modale
 btnclose.addEventListener('click', () => {
-  // console.log("click");
   //au click sur la croix, la modale passe en display:none pour disparaitre
   modalbg.style.display="none";
+  resetModal();
 })
+
 
 //conservation des données en cliquant sur le bouton submit
 //annule le changement de page
@@ -45,13 +55,7 @@ formulaire.addEventListener("submit", (e) => {
   let tournamentNumber = document.getElementById("quantity")
   let buttons = document.getElementsByName("location")
   let cgvChecked = document.getElementById("checkbox1")
-  firstNameValidate(firstName);
-  lastNameValidate(lastName);
-  emailValidate(email);
-  birthDateValidate(birthDate)
-  numberTournamentValidate(tournamentNumber);
-  chooseLocation(buttons) ;
-  cgvValidate(cgvChecked);
+
 
   let error = 0
 
@@ -75,22 +79,27 @@ formulaire.addEventListener("submit", (e) => {
   }
   if (!cgvValidate(cgvChecked)){
     error++;
-  }  
-  console.log(error)
-
-  if (error === 0){
-    alert("  -----------------\nFormulaire complet\n  -----------------\n\nMerci de votre participation")
-  }else{
-    alert("  ------------------\nFormulaire incomplet\n  ------------------")
   }
-  
+  //à la suite les uns des autres pour avoir l'ensemble des erreurs si aucun champ rempli
+  else{
+    formData.forEach(function (userItem) {
+      userItem.remove()
+    });
+    
+    message.style.display="block"
+    button.value = "Fermer";
+    button.addEventListener('click', () => {
+      modalbg.style.display="none";
+    })
+
+    }
 })
 
 //Issue 3
 //Mes fonctions de validation des input
 function firstNameValidate (field){
   const regex = /^[A-zÀ-ú-]{2,}$/
-  
+
   if (regex.test(field.value)===false){
     formData[0].setAttribute('data-error', 'Le champ "Prénom" est incorrect');
     formData[0].setAttribute('data-error-visible', 'true');
@@ -100,7 +109,7 @@ function firstNameValidate (field){
     formData[0].removeAttribute('data-error-visible');
     return true;
   }
-  
+
 }
 function lastNameValidate (field){
   const regex = /^[A-zÀ-ú-]{2,}$/
@@ -153,7 +162,7 @@ function chooseLocation(buttons) {
     //si un bouton est coché
     if (buttons[i].checked) {
       formData[5].setAttribute("data-error-visible", "false");
-      return true;     
+      return true;
     }
   }
   formData[5].setAttribute("data-error-visible", "true");
@@ -177,7 +186,7 @@ function cgvValidate (field){
 
 ////2.2.1: champ prénom : min 2 caractères/pas vide
 //validation selon une expression régulière
-//utilisation de la regex: 
+//utilisation de la regex:
 // regex: ^[A-zÀ-ú-]{2,}$
 // caractère a-z avec accent et tiret (pour prenom composé)
 //pris en compte ancre de début ^(début de la ligne)
@@ -186,7 +195,7 @@ function cgvValidate (field){
 //2.2.2 même chose pour le champ nom de famille: min 2 caractères / pas vide
 
 //2.2.3: adresse email valide
-//attribut type:email 
+//attribut type:email
 // regex email: ^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$
 // caractère alphanumerique (sans accent) avant et après le "@" et le point
 //min 2 charcatères
