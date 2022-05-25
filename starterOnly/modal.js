@@ -30,9 +30,9 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 //reset le formulaire à la fermeture de la modale
-function resetModal(){
-  formulaire.reset()
-}
+// function resetModal(){
+//   formData.reset()
+// }
 
 
 // --- Issue 1: close the modal
@@ -40,7 +40,7 @@ function resetModal(){
 btnclose.addEventListener('click', () => {
   //au click sur la croix, la modale passe en display:none pour disparaitre
   modalbg.style.display="none";
-  resetModal();
+  formulaire.reset();
 })
 
 
@@ -85,13 +85,15 @@ formulaire.addEventListener("submit", (e) => {
     formData.forEach(function (userItem) {
       userItem.remove()
     });
-    
     message.style.display="block"
     button.value = "Fermer";
     button.addEventListener('click', () => {
       modalbg.style.display="none";
+      location.reload();
     })
-
+    btnclose.addEventListener('click', () => {
+      location.reload();
+    })
     }
 })
 
