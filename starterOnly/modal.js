@@ -29,10 +29,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   modalbg.style.display = "block";
 }
-//reset le formulaire à la fermeture de la modale
-// function resetModal(){
-//   formData.reset()
-// }
+
 
 
 // --- Issue 1: close the modal
@@ -40,7 +37,12 @@ function launchModal() {
 btnclose.addEventListener('click', () => {
   //au click sur la croix, la modale passe en display:none pour disparaitre
   modalbg.style.display="none";
+  //reset des input
   formulaire.reset();
+  //enleve la classe erreur si input non remplit
+  formData.forEach(function (userItem) {
+    userItem.removeAttribute('data-error-visible')
+  });
 })
 
 
@@ -55,7 +57,6 @@ formulaire.addEventListener("submit", (e) => {
   let tournamentNumber = document.getElementById("quantity")
   let buttons = document.getElementsByName("location")
   let cgvChecked = document.getElementById("checkbox1")
-
 
   let error = 0
 
@@ -111,7 +112,6 @@ function firstNameValidate (field){
     formData[0].removeAttribute('data-error-visible');
     return true;
   }
-
 }
 function lastNameValidate (field){
   const regex = /^[A-zÀ-ú-]{2,}$/
@@ -186,6 +186,8 @@ function cgvValidate (field){
 }
 
 
+
+
 ////2.2.1: champ prénom : min 2 caractères/pas vide
 //validation selon une expression régulière
 //utilisation de la regex:
@@ -210,3 +212,13 @@ function cgvValidate (field){
 
 //2.2.6 : les cgv sont cochés
 // dans l'input checkbox: l'attribut "checked" est rajouté pour le 1er + attribut "required" pour valider le formuliare, pour le 2e ni requis ni coché d'avance
+
+
+
+//
+// const validation = [firstNameValidate(firstName),lastNameValidate(lastName),emailValidate(email), birthDateValidate(birthDate),numberTournamentValidate(tournamentNumber),chooseLocation(buttons),cgvValidate(cgvChecked)]
+
+// validation.forEach(validation =>  {
+//   if(!validation){
+//     error++;
+//   }

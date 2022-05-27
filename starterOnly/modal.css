@@ -500,13 +500,13 @@ footer {
     margin-top:80px;
   }
   .bground{
-    background-color: #fff;
-  
+    background-color: rgba(255, 255, 255, 0);
+    /* background-color: rgba(26, 39, 156, 0.4);  */
   }
   .topnav{
     padding: 0;
     margin: 10px 0;
-    z-index:200;
+    /* z-index:200; */
     
   }
   .header-logo img{
@@ -576,13 +576,15 @@ footer {
     position: absolute;
     left: 30px;
     top: 30px;
-    width:30%;
+    width:150px;
   }
   .topnav.responsive a {
-
     float: none;
     display: block;
-    text-align: left;
+    text-align: right;
+  }
+  .topnav.responsive .menumobile{
+    margin-right: 40px;
   }
 
 }
@@ -593,6 +595,13 @@ footer {
     float: right;
     display: block;
     
+  }
+  .topnav.responsive .menumobile {
+    position:relative;
+    top:50px;
+  }
+  .topnav.responsive{
+    height: 35vh;
   }
 } 
 
