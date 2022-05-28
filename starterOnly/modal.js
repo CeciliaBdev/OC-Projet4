@@ -12,15 +12,14 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 //le formulaire
 const formulaire = document.querySelector("form");
-//bouton close modal
+const formData = document.querySelectorAll(".formData");
+//la modale
 const btnclose = document.querySelector(".close");
-//tous les champs du formulaire
-const formData = document.querySelectorAll(".formData")
-const modal = document.querySelector(".modal-body")
+const modal = document.querySelector(".modal-body");
+const button = document.querySelector(".button");
+const message = document.getElementById("confirm");
+message.style.display = "none";
 
-const button = document.querySelector(".button")
-const message = document.getElementById("confirm")
-message.style.display = "none"
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -29,8 +28,6 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   modalbg.style.display = "block";
 }
-
-
 
 // --- Issue 1: close the modal
 //variable btnclose : croix de la modale
@@ -50,6 +47,7 @@ btnclose.addEventListener('click', () => {
 //annule le changement de page
 formulaire.addEventListener("submit", (e) => {
   e.preventDefault();
+  //variables entrées formulaire
   let firstName = document.getElementById("first")
   let lastName = document.getElementById("last")
   let email = document.getElementById("email")
@@ -59,7 +57,7 @@ formulaire.addEventListener("submit", (e) => {
   let cgvChecked = document.getElementById("checkbox1")
 
   let error = 0
-
+  //test validité des champs input
   if (!firstNameValidate(firstName)){
     error++;
   }
@@ -82,6 +80,7 @@ formulaire.addEventListener("submit", (e) => {
     error++;
   }
   //à la suite les uns des autres pour avoir l'ensemble des erreurs si aucun champ rempli
+  //si pas d'erreurs: champs disparaissent
   else{
     formData.forEach(function (userItem) {
       userItem.remove()
