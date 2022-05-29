@@ -79,6 +79,11 @@ formulaire.addEventListener("submit", (e) => {
   if (!cgvValidate(cgvChecked)){
     error++;
   }
+  //si un champ présente une erreur : error++
+  if (error != 0){
+    console.log("erreur")
+  }
+
   //à la suite les uns des autres pour avoir l'ensemble des erreurs si aucun champ rempli
   //si pas d'erreurs: champs disparaissent
   else{
